@@ -1,11 +1,13 @@
 # analysis script v2 FINAL (do not delete!!)
 # TODO ask Ming where the 2024 data went
 import csv
+from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-f = open("/Users/postdoc-old-laptop/projects/field_study/measurements.csv")  # <- hardcoded path
+REPO = Path(__file__).resolve().parent
+f = open(REPO / "data" / "raw" / "measurements.csv")  # path relative to this file
 r = csv.reader(f)
 next(r)
 d = []
@@ -48,9 +50,11 @@ for x in d:
     except:
         pass
 
+out_dir = REPO / "out"
+out_dir.mkdir(exist_ok=True)
 plt.figure()
 plt.plot(t2)
 plt.title("temperatures")
-plt.savefig("/Users/postdoc-old-laptop/Desktop/plot_final_v3.png")
+plt.savefig(out_dir / "plot.png")  # relative output path
 # plt.show()
 # print("rows:", len(d))
