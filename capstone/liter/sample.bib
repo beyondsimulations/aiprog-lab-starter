@@ -1,0 +1,228 @@
+% sample.bib -- reference library for the capstone Option A (dedup + DOI-check) exercise.
+%
+% This file is DELIBERATELY messy. It contains:
+%
+%   PLANTED DUPLICATES (3 papers, each appearing twice under different keys/formatting):
+%     * wilson2017good      <-> wilson2017goodenough    (Good enough practices in scientific computing)
+%     * wilkinson2016fair   <-> fair_principles_2016    (The FAIR Guiding Principles)
+%     * mckinney2010data    <-> mckinney_pandas_2010    (Data Structures for Statistical Computing in Python)
+%
+%   BROKEN DOIs (2 entries whose DOI does NOT resolve -- fix them in the exercise):
+%     * ram2013git          (doi 10.1186/1751-0473-8-999 is wrong; correct is 10.1186/1751-0473-8-7)
+%     * boettiger2015docker (doi 10.1145/9999999.9999999 is wrong; correct is 10.1145/2723872.2723882)
+%
+% Every OTHER doi in this file resolves. Total entries: 20 (17 unique papers + 3 duplicates).
+
+@article{wilson2017good,
+  author  = {Wilson, Greg and Bryan, Jennifer and Cranston, Karen and Kitzes, Justin and Nederbragt, Lex and Teal, Tracy K.},
+  title   = {Good enough practices in scientific computing},
+  journal = {PLoS Computational Biology},
+  volume  = {13},
+  number  = {6},
+  pages   = {e1005510},
+  year    = {2017},
+  doi     = {10.1371/journal.pcbi.1005510}
+}
+
+@article{sandve2013ten,
+  author  = {Sandve, Geir Kjetil and Nekrutenko, Anton and Taylor, James and Hovig, Eivind},
+  title   = {Ten Simple Rules for Reproducible Computational Research},
+  journal = {PLoS Computational Biology},
+  volume  = {9},
+  number  = {10},
+  pages   = {e1003285},
+  year    = {2013},
+  doi     = {10.1371/journal.pcbi.1003285}
+}
+
+@article{wilkinson2016fair,
+  author  = {Wilkinson, Mark D. and Dumontier, Michel and Aalbersberg, IJsbrand Jan and others},
+  title   = {The {FAIR} Guiding Principles for scientific data management and stewardship},
+  journal = {Scientific Data},
+  volume  = {3},
+  pages   = {160018},
+  year    = {2016},
+  doi     = {10.1038/sdata.2016.18}
+}
+
+@article{peng2011reproducible,
+  author  = {Peng, Roger D.},
+  title   = {Reproducible Research in Computational Science},
+  journal = {Science},
+  volume  = {334},
+  number  = {6060},
+  pages   = {1226--1227},
+  year    = {2011},
+  doi     = {10.1126/science.1213847}
+}
+
+@article{wilson2014best,
+  author  = {Wilson, Greg and Aruliah, D. A. and Brown, C. Titus and others},
+  title   = {Best Practices for Scientific Computing},
+  journal = {PLoS Biology},
+  volume  = {12},
+  number  = {1},
+  pages   = {e1001745},
+  year    = {2014},
+  doi     = {10.1371/journal.pbio.1001745}
+}
+
+@article{harris2020array,
+  author  = {Harris, Charles R. and Millman, K. Jarrod and van der Walt, St{\'e}fan J. and others},
+  title   = {Array programming with {NumPy}},
+  journal = {Nature},
+  volume  = {585},
+  number  = {7825},
+  pages   = {357--362},
+  year    = {2020},
+  doi     = {10.1038/s41586-020-2649-2}
+}
+
+@article{hunter2007matplotlib,
+  author  = {Hunter, John D.},
+  title   = {Matplotlib: A 2D Graphics Environment},
+  journal = {Computing in Science \& Engineering},
+  volume  = {9},
+  number  = {3},
+  pages   = {90--95},
+  year    = {2007},
+  doi     = {10.1109/MCSE.2007.55}
+}
+
+@article{virtanen2020scipy,
+  author  = {Virtanen, Pauli and Gommers, Ralf and Oliphant, Travis E. and others},
+  title   = {{SciPy} 1.0: fundamental algorithms for scientific computing in {Python}},
+  journal = {Nature Methods},
+  volume  = {17},
+  number  = {3},
+  pages   = {261--272},
+  year    = {2020},
+  doi     = {10.1038/s41592-019-0686-2}
+}
+
+@article{baker2016reproducibility,
+  author  = {Baker, Monya},
+  title   = {1,500 scientists lift the lid on reproducibility},
+  journal = {Nature},
+  volume  = {533},
+  number  = {7604},
+  pages   = {452--454},
+  year    = {2016},
+  doi     = {10.1038/533452a}
+}
+
+@article{stodden2016enhancing,
+  author  = {Stodden, Victoria and McNutt, Marcia and Bailey, David H. and others},
+  title   = {Enhancing reproducibility for computational methods},
+  journal = {Science},
+  volume  = {354},
+  number  = {6317},
+  pages   = {1240--1241},
+  year    = {2016},
+  doi     = {10.1126/science.aah6168}
+}
+
+@article{goodman2016what,
+  author  = {Goodman, Steven N. and Fanelli, Daniele and Ioannidis, John P. A.},
+  title   = {What does research reproducibility mean?},
+  journal = {Science Translational Medicine},
+  volume  = {8},
+  number  = {341},
+  pages   = {341ps12},
+  year    = {2016},
+  doi     = {10.1126/scitranslmed.aaf5027}
+}
+
+@article{munafo2017manifesto,
+  author  = {Munaf{\`o}, Marcus R. and Nosek, Brian A. and Bishop, Dorothy V. M. and others},
+  title   = {A manifesto for reproducible science},
+  journal = {Nature Human Behaviour},
+  volume  = {1},
+  pages   = {0021},
+  year    = {2017},
+  doi     = {10.1038/s41562-016-0021}
+}
+
+@article{piccolo2016tools,
+  author  = {Piccolo, Stephen R. and Frampton, Michael B.},
+  title   = {Tools and techniques for computational reproducibility},
+  journal = {GigaScience},
+  volume  = {5},
+  number  = {1},
+  pages   = {30},
+  year    = {2016},
+  doi     = {10.1186/s13742-016-0135-4}
+}
+
+@article{ram2013git,
+  author  = {Ram, Karthik},
+  title   = {Git can facilitate greater reproducibility and increased transparency in science},
+  journal = {Source Code for Biology and Medicine},
+  volume  = {8},
+  pages   = {7},
+  year    = {2013},
+  doi     = {10.1186/1751-0473-8-999}
+}
+
+@article{nosek2015promoting,
+  author  = {Nosek, Brian A. and Alter, George and Banks, George C. and others},
+  title   = {Promoting an open research culture},
+  journal = {Science},
+  volume  = {348},
+  number  = {6242},
+  pages   = {1422--1425},
+  year    = {2015},
+  doi     = {10.1126/science.aab2374}
+}
+
+@inproceedings{boettiger2015docker,
+  author    = {Boettiger, Carl},
+  title     = {An introduction to Docker for reproducible research},
+  booktitle = {ACM SIGOPS Operating Systems Review},
+  volume    = {49},
+  number    = {1},
+  pages     = {71--79},
+  year      = {2015},
+  doi       = {10.1145/9999999.9999999}
+}
+
+@inproceedings{mckinney2010data,
+  author    = {McKinney, Wes},
+  title     = {Data Structures for Statistical Computing in {Python}},
+  booktitle = {Proceedings of the 9th Python in Science Conference},
+  pages     = {56--61},
+  year      = {2010},
+  doi       = {10.25080/Majora-92bf1922-00a}
+}
+
+% ---- planted duplicate #1: same paper as wilson2017good, different key + formatting ----
+@article{wilson2017goodenough,
+  author  = {Wilson, G. and Bryan, J. and Cranston, K. and Kitzes, J. and Nederbragt, L. and Teal, T. K.},
+  title   = {Good Enough Practices in Scientific Computing},
+  journal = {PLoS Comput. Biol.},
+  year    = {2017},
+  volume  = {13},
+  number  = {6},
+  doi     = {10.1371/journal.pcbi.1005510}
+}
+
+% ---- planted duplicate #2: same paper as wilkinson2016fair, different key + formatting ----
+@article{fair_principles_2016,
+  author  = {Wilkinson, M. D. and Dumontier, M. and Aalbersberg, I. J. and et al.},
+  title   = {The FAIR guiding principles for scientific data management and stewardship},
+  journal = {Sci Data},
+  year    = {2016},
+  volume  = {3},
+  pages   = {160018},
+  doi     = {10.1038/sdata.2016.18}
+}
+
+% ---- planted duplicate #3: same paper as mckinney2010data, different key + formatting ----
+@inproceedings{mckinney_pandas_2010,
+  author    = {McKinney, W.},
+  title     = {Data structures for statistical computing in python},
+  booktitle = {Proc. 9th Python in Science Conf. (SciPy)},
+  year      = {2010},
+  pages     = {56--61},
+  doi       = {10.25080/Majora-92bf1922-00a}
+}
