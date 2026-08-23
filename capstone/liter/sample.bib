@@ -1,228 +1,199 @@
-% sample.bib -- reference library for the capstone Option A (dedup + DOI-check) exercise.
-%
-% This file is DELIBERATELY messy. It contains:
-%
-%   PLANTED DUPLICATES (3 papers, each appearing twice under different keys/formatting):
-%     * wilson2017good      <-> wilson2017goodenough    (Good enough practices in scientific computing)
-%     * wilkinson2016fair   <-> fair_principles_2016    (The FAIR Guiding Principles)
-%     * mckinney2010data    <-> mckinney_pandas_2010    (Data Structures for Statistical Computing in Python)
-%
-%   BROKEN DOIs (2 entries whose DOI does NOT resolve -- fix them in the exercise):
-%     * ram2013git          (doi 10.1186/1751-0473-8-999 is wrong; correct is 10.1186/1751-0473-8-7)
-%     * boettiger2015docker (doi 10.1145/9999999.9999999 is wrong; correct is 10.1145/2723872.2723882)
-%
-% Every OTHER doi in this file resolves. Total entries: 20 (17 unique papers + 3 duplicates).
+% sample.bib -- a "messy" reading list for the Literature Manager capstone.
+% Collected from several colleagues' reference exports; formatting varies.
 
-@article{wilson2017good,
-  author  = {Wilson, Greg and Bryan, Jennifer and Cranston, Karen and Kitzes, Justin and Nederbragt, Lex and Teal, Tracy K.},
-  title   = {Good enough practices in scientific computing},
-  journal = {PLoS Computational Biology},
-  volume  = {13},
-  number  = {6},
-  pages   = {e1005510},
-  year    = {2017},
-  doi     = {10.1371/journal.pcbi.1005510}
+@article{dijkstra1968,
+  author  = {Dijkstra, Edsger W.},
+  title   = {Letters to the editor: go to statement considered harmful},
+  journal = {Communications of the ACM},
+  year    = {1968},
+  volume  = {11},
+  number  = {3},
+  pages   = {147--148},
+  doi     = {10.1145/362929.362947}
 }
 
-@article{sandve2013ten,
-  author  = {Sandve, Geir Kjetil and Nekrutenko, Anton and Taylor, James and Hovig, Eivind},
-  title   = {Ten Simple Rules for Reproducible Computational Research},
-  journal = {PLoS Computational Biology},
-  volume  = {9},
-  number  = {10},
-  pages   = {e1003285},
-  year    = {2013},
-  doi     = {10.1371/journal.pcbi.1003285}
-}
-
-@article{wilkinson2016fair,
-  author  = {Wilkinson, Mark D. and Dumontier, Michel and Aalbersberg, IJsbrand Jan and others},
-  title   = {The {FAIR} Guiding Principles for scientific data management and stewardship},
-  journal = {Scientific Data},
-  volume  = {3},
-  pages   = {160018},
-  year    = {2016},
-  doi     = {10.1038/sdata.2016.18}
-}
-
-@article{peng2011reproducible,
-  author  = {Peng, Roger D.},
-  title   = {Reproducible Research in Computational Science},
-  journal = {Science},
-  volume  = {334},
-  number  = {6060},
-  pages   = {1226--1227},
-  year    = {2011},
-  doi     = {10.1126/science.1213847}
-}
-
-@article{wilson2014best,
-  author  = {Wilson, Greg and Aruliah, D. A. and Brown, C. Titus and others},
-  title   = {Best Practices for Scientific Computing},
-  journal = {PLoS Biology},
+@article{Hoare1969AxiomaticBasis,
+  author  = {Hoare, C. A. R.},
+  title   = {An Axiomatic Basis for Computer Programming},
+  journal = {Commun. ACM},
+  year    = {1969},
   volume  = {12},
-  number  = {1},
-  pages   = {e1001745},
-  year    = {2014},
-  doi     = {10.1371/journal.pbio.1001745}
+  number  = {10},
+  pages   = {576--580},
+  doi     = {10.1145/363235.363259}
 }
 
-@article{harris2020array,
-  author  = {Harris, Charles R. and Millman, K. Jarrod and van der Walt, St{\'e}fan J. and others},
-  title   = {Array programming with {NumPy}},
-  journal = {Nature},
-  volume  = {585},
-  number  = {7825},
-  pages   = {357--362},
-  year    = {2020},
-  doi     = {10.1038/s41586-020-2649-2}
-}
-
-@article{hunter2007matplotlib,
-  author  = {Hunter, John D.},
-  title   = {Matplotlib: A 2D Graphics Environment},
-  journal = {Computing in Science \& Engineering},
-  volume  = {9},
-  number  = {3},
-  pages   = {90--95},
-  year    = {2007},
-  doi     = {10.1109/MCSE.2007.55}
-}
-
-@article{virtanen2020scipy,
-  author  = {Virtanen, Pauli and Gommers, Ralf and Oliphant, Travis E. and others},
-  title   = {{SciPy} 1.0: fundamental algorithms for scientific computing in {Python}},
-  journal = {Nature Methods},
+@article{ritchie_thompson_unix,
+  author  = {Ritchie, Dennis M. and Thompson, Ken},
+  title   = {The {UNIX} Time-Sharing System},
+  journal = {Communications of the ACM},
+  year    = {1974},
   volume  = {17},
-  number  = {3},
-  pages   = {261--272},
-  year    = {2020},
-  doi     = {10.1038/s41592-019-0686-2}
+  number  = {7},
+  pages   = {365--375},
+  doi     = {10.1145/361011.361061}
 }
 
-@article{baker2016reproducibility,
-  author  = {Baker, Monya},
-  title   = {1,500 scientists lift the lid on reproducibility},
-  journal = {Nature},
-  volume  = {533},
-  number  = {7604},
-  pages   = {452--454},
-  year    = {2016},
-  doi     = {10.1038/533452a}
-}
-
-@article{stodden2016enhancing,
-  author  = {Stodden, Victoria and McNutt, Marcia and Bailey, David H. and others},
-  title   = {Enhancing reproducibility for computational methods},
-  journal = {Science},
-  volume  = {354},
-  number  = {6317},
-  pages   = {1240--1241},
-  year    = {2016},
-  doi     = {10.1126/science.aah6168}
-}
-
-@article{goodman2016what,
-  author  = {Goodman, Steven N. and Fanelli, Daniele and Ioannidis, John P. A.},
-  title   = {What does research reproducibility mean?},
-  journal = {Science Translational Medicine},
-  volume  = {8},
-  number  = {341},
-  pages   = {341ps12},
-  year    = {2016},
-  doi     = {10.1126/scitranslmed.aaf5027}
-}
-
-@article{munafo2017manifesto,
-  author  = {Munaf{\`o}, Marcus R. and Nosek, Brian A. and Bishop, Dorothy V. M. and others},
-  title   = {A manifesto for reproducible science},
-  journal = {Nature Human Behaviour},
-  volume  = {1},
-  pages   = {0021},
-  year    = {2017},
-  doi     = {10.1038/s41562-016-0021}
-}
-
-@article{piccolo2016tools,
-  author  = {Piccolo, Stephen R. and Frampton, Michael B.},
-  title   = {Tools and techniques for computational reproducibility},
-  journal = {GigaScience},
-  volume  = {5},
-  number  = {1},
-  pages   = {30},
-  year    = {2016},
-  doi     = {10.1186/s13742-016-0135-4}
-}
-
-@article{ram2013git,
-  author  = {Ram, Karthik},
-  title   = {Git can facilitate greater reproducibility and increased transparency in science},
-  journal = {Source Code for Biology and Medicine},
-  volume  = {8},
-  pages   = {7},
-  year    = {2013},
-  doi     = {10.1186/1751-0473-8-999}
-}
-
-@article{nosek2015promoting,
-  author  = {Nosek, Brian A. and Alter, George and Banks, George C. and others},
-  title   = {Promoting an open research culture},
-  journal = {Science},
-  volume  = {348},
-  number  = {6242},
-  pages   = {1422--1425},
-  year    = {2015},
-  doi     = {10.1126/science.aab2374}
-}
-
-@inproceedings{boettiger2015docker,
-  author    = {Boettiger, Carl},
-  title     = {An introduction to Docker for reproducible research},
-  booktitle = {ACM SIGOPS Operating Systems Review},
-  volume    = {49},
-  number    = {1},
-  pages     = {71--79},
-  year      = {2015},
-  doi       = {10.1145/9999999.9999999}
-}
-
-@inproceedings{mckinney2010data,
-  author    = {McKinney, Wes},
-  title     = {Data Structures for Statistical Computing in {Python}},
-  booktitle = {Proceedings of the 9th Python in Science Conference},
-  pages     = {56--61},
-  year      = {2010},
-  doi       = {10.25080/Majora-92bf1922-00a}
-}
-
-% ---- planted duplicate #1: same paper as wilson2017good, different key + formatting ----
-@article{wilson2017goodenough,
-  author  = {Wilson, G. and Bryan, J. and Cranston, K. and Kitzes, J. and Nederbragt, L. and Teal, T. K.},
-  title   = {Good Enough Practices in Scientific Computing},
-  journal = {PLoS Comput. Biol.},
-  year    = {2017},
+@article{codd1970relational,
+  author  = {Codd, E. F.},
+  title   = {A Relational Model of Data for Large Shared Data Banks},
+  journal = {Communications of the ACM},
+  year    = {1970},
   volume  = {13},
   number  = {6},
-  doi     = {10.1371/journal.pcbi.1005510}
+  pages   = {377--387},
+  doi     = {10.1145/362384.362685}
 }
 
-% ---- planted duplicate #2: same paper as wilkinson2016fair, different key + formatting ----
-@article{fair_principles_2016,
-  author  = {Wilkinson, M. D. and Dumontier, M. and Aalbersberg, I. J. and et al.},
-  title   = {The FAIR guiding principles for scientific data management and stewardship},
-  journal = {Sci Data},
-  year    = {2016},
+@article{turing1950,
+  author  = {Turing, A. M.},
+  title   = {Computing Machinery and Intelligence},
+  journal = {Mind},
+  year    = {1950},
+  volume  = {59},
+  number  = {236},
+  pages   = {433--460},
+  doi     = {10.1093/mind/LIX.236.433}
+}
+
+@article{shannon48,
+  author  = {Shannon, C. E.},
+  title   = {A Mathematical Theory of Communication},
+  journal = {The Bell System Technical Journal},
+  year    = {1948},
+  volume  = {27},
+  number  = {3},
+  pages   = {379--423},
+  doi     = {10.1002/j.1538-7305.1948.tb01338.x}
+}
+
+@article{brooks1987silverbullet,
+  author  = {Brooks, Frederick P.},
+  title   = {No Silver Bullet: Essence and Accidents of Software Engineering},
+  journal = {Computer},
+  year    = {1987},
+  volume  = {20},
+  number  = {4},
+  pages   = {10--19},
+  doi     = {10.1109/MC.1987.1663532}
+}
+
+@article{parnas1972criteria,
+  author  = {Parnas, D. L.},
+  title   = {On the Criteria to Be Used in Decomposing Systems into Modules},
+  journal = {Communications of the ACM},
+  year    = {1972},
+  volume  = {15},
+  number  = {12},
+  pages   = {1053--1058},
+  doi     = {10.1145/361598.361623}
+}
+
+@article{bessey2010coverity,
+  author  = {Bessey, Al and Block, Ken and Chelf, Ben and Chou, Andy and Fulton, Bryan and Hallem, Seth and Henri-Gros, Charles and Kamsky, Asya and McPeak, Scott and Engler, Dawson},
+  title   = {A Few Billion Lines of Code Later: Using Static Analysis to Find Bugs in the Real World},
+  journal = {Communications of the ACM},
+  year    = {2010},
+  volume  = {53},
+  number  = {2},
+  pages   = {66--75},
+  doi     = {10.1145/1646353.1646374}
+}
+
+@article{knuth_art_1974,
+  author  = {Knuth, Donald E.},
+  title   = {Computer Programming as an Art},
+  journal = {Communications of the ACM},
+  year    = {1974},
+  volume  = {17},
+  number  = {12},
+  pages   = {667--673},
+  doi     = {10.1145/361604.361612}
+}
+
+@article{mccarthy1960lisp,
+  author  = {McCarthy, John},
+  title   = {Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part {I}},
+  journal = {Communications of the ACM},
+  year    = {1960},
   volume  = {3},
-  pages   = {160018},
-  doi     = {10.1038/sdata.2016.18}
+  number  = {4},
+  pages   = {184--195},
+  doi     = {10.1145/367177.367199}
 }
 
-% ---- planted duplicate #3: same paper as mckinney2010data, different key + formatting ----
-@inproceedings{mckinney_pandas_2010,
-  author    = {McKinney, W.},
-  title     = {Data structures for statistical computing in python},
-  booktitle = {Proc. 9th Python in Science Conf. (SciPy)},
-  year      = {2010},
-  pages     = {56--61},
-  doi       = {10.25080/Majora-92bf1922-00a}
+@inproceedings{vaswani2017attention,
+  author    = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N. and Kaiser, Lukasz and Polosukhin, Illia},
+  title     = {Attention Is All You Need},
+  booktitle = {Advances in Neural Information Processing Systems 30},
+  year      = {2017},
+  note      = {arXiv:1706.03762}
+}
+
+@misc{brown2020gpt3,
+  author = {Brown, Tom B. and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie and others},
+  title  = {Language Models are Few-Shot Learners},
+  year   = {2020},
+  note   = {arXiv:2005.14165}
+}
+
+@misc{chen2021codex,
+  author = {Chen, Mark and Tworek, Jerry and Jun, Heewoo and Yuan, Qiming and others},
+  title  = {Evaluating Large Language Models Trained on Code},
+  year   = {2021},
+  note   = {arXiv:2107.03374}
+}
+
+@inproceedings{moseley2006tarpit,
+  author    = {Moseley, Ben and Marks, Peter},
+  title     = {Out of the Tar Pit},
+  booktitle = {Software Practice Advancement (SPA)},
+  year      = {2006}
+}
+
+@article{ziegler2024copilot,
+  author  = {Ziegler, Albert and Kalliamvakou, Eirini and Li, X. Alice and Rice, Andrew and Rifkin, Devon and Simister, Shawn and Sittampalam, Ganesh and Aftandilian, Edward},
+  title   = {Measuring {GitHub} {Copilot}'s Impact on Productivity},
+  journal = {Communications of the ACM},
+  year    = {2024},
+  volume  = {67},
+  number  = {3},
+  doi     = {10.1145/3299999.9999999}
+}
+
+@article{boehm1988spiral,
+  author  = {Boehm, Barry W.},
+  title   = {A Spiral Model of Software Development and Enhancement},
+  journal = {Computer},
+  year    = {1988},
+  volume  = {21},
+  number  = {5},
+  pages   = {61--72},
+  doi     = {10.1109/MC.1987.166353}
+}
+
+@article{Dijkstra1968GoTo,
+  author  = {Dijkstra, E. W.},
+  title   = {Go To Statement Considered Harmful},
+  journal = {Commun. ACM},
+  year    = {1968},
+  volume  = {11},
+  pages   = {147--148},
+  doi     = {10.1145/362929.362947}
+}
+
+@article{turing_1950_computing,
+  author  = {Turing, Alan M.},
+  title   = {Computing machinery and intelligence},
+  journal = {Mind, New Series},
+  year    = {1950},
+  volume  = {LIX},
+  pages   = {433--460}
+}
+
+@misc{vaswani_attention_2017,
+  author = {Vaswani, A. and Shazeer, N. and Parmar, N. and others},
+  title  = {Attention is all you need},
+  year   = {2017},
+  note   = {NeurIPS 2017, Long Beach}
 }
