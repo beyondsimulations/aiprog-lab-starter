@@ -24,7 +24,7 @@ Module: src/pipeline/io.py, functions load_raw(path), clean(df).
 ## Data observations (612 rows):
 - Temperature units: 460 C, 152 F
 - Humidity missing: 36 empty, 21 "n/a", 16 -99
-- Wind "calm": 30 occurrences
+- Wind "calm": 36 occurrences
 - Station whitespace: at least 1 occurrence (" Charlie ")
 - Duplicate rows: 12 exact duplicates
 

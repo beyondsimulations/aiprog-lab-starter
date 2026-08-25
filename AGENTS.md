@@ -38,6 +38,7 @@ Teaching material for the **AI-Assisted Programming workshop** at HSU.
 - No formal test suite
 - Validate by running script and checking output/plots
 - Use print statements or assertions for new functionality
+- **Always use `uv run python <script>` to execute Python scripts**
 
 ---
 
