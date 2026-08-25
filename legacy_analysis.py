@@ -5,7 +5,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-f = open("/Users/postdoc-old-laptop/projects/field_study/measurements.csv")  # <- hardcoded path
+f = open("data/raw/measurements.csv")  # relative path from project root
 r = csv.reader(f)
 next(r)
 d = []
@@ -51,6 +51,6 @@ for x in d:
 plt.figure()
 plt.plot(t2)
 plt.title("temperatures")
-plt.savefig("/Users/postdoc-old-laptop/Desktop/plot_final_v3.png")
+plt.savefig("data/visualizations/temperature_plot.png")
 # plt.show()
 # print("rows:", len(d))
