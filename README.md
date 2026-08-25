@@ -1,6 +1,6 @@
 # Field Study Analysis
 
-Field-study analysis. Inherited from a previous PhD student. `legacy_analysis.py` computes summary statistics from `data/raw/measurements.csv`. It worked on their machine.
+Field-study analysis. Inherited from a postdoc who has left the group. `legacy_analysis.py` computes summary statistics from `data/raw/measurements.csv`. It worked on their machine.
 
 ---
 
