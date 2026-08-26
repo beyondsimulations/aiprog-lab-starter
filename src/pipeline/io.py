@@ -120,7 +120,13 @@ def clean(df: "pd.DataFrame") -> tuple["pd.DataFrame", dict[str, Any], str]:
             return val.replace(",", ".")
         return val
 
+    # Track decimal comma replacements
+    humidity_before = cleaned["humidity_pct"].copy()
     cleaned["humidity_pct"] = cleaned["humidity_pct"].apply(clean_humidity)
+    # Count how many values had commas replaced
+    # Use regex=False to avoid regex special characters (dot matches any char in regex)
+    decimal_comma_mask = (humidity_before.str.contains(",", regex=False) & ~humidity_before.str.contains(".", regex=False))
+    stats["humidity_decimal_commas"] = int(decimal_comma_mask.sum())
 
     # Now set missing values to NaN
     cleaned.loc[humidity_missing_mask, "humidity_pct"] = None
