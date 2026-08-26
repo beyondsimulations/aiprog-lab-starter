@@ -4,19 +4,18 @@ This test suite follows TDD principles and covers all functions specified
 in docs/stats_module_spec.md.
 """
 
+from pathlib import Path
+
 import pandas as pd
 import pytest
-from pathlib import Path
-from datetime import datetime, timedelta
 
-# Import functions - these will fail until implemented
 from pipeline.stats import (
-    station_summary,
     daily_summary,
-    station_daily_summary,
     data_quality_report,
+    export_summary_report,
+    station_daily_summary,
     station_rankings,
-    export_summary_report
+    station_summary,
 )
 
 
@@ -193,7 +192,7 @@ class TestStationSummary:
         original_dtypes = df.dtypes.copy()
         original_values = df.copy()
         
-        result = station_summary(df)
+        _ = station_summary(df)
         
         # Original DataFrame should be unchanged
         assert df.equals(original_values)
@@ -223,7 +222,7 @@ class TestStationSummary:
         })
         
         with pytest.raises(ValueError, match="Missing required columns"):
-            station_summary(df)
+            _ = station_summary(df)
 
 
 # =============================================================================
@@ -248,11 +247,12 @@ class TestDailySummary:
         assert len(result) == 3
         
         # Check first day
-        assert result.loc[dates[0].date(), "temp_mean"] == pytest.approx(12.5)
-        assert result.loc[dates[0].date(), "temp_max"] == pytest.approx(15.0)
-        assert result.loc[dates[0].date(), "temp_min"] == pytest.approx(10.0)
-        assert result.loc[dates[0].date(), "station_count"] == 2
-        assert result.loc[dates[0].date(), "reading_count"] == 2
+        first_day = result[result.index == dates[0].date()].iloc[0]
+        assert first_day["temp_mean"] == pytest.approx(12.5)
+        assert first_day["temp_max"] == pytest.approx(15.0)
+        assert first_day["temp_min"] == pytest.approx(10.0)
+        assert first_day["station_count"] == 2
+        assert first_day["reading_count"] == 2
 
     def test_empty_dataframe(self):
         """Test daily summary with empty DataFrame."""
@@ -281,7 +281,7 @@ class TestDailySummary:
         })
         
         with pytest.raises(ValueError, match="Missing required columns"):
-            daily_summary(df)
+            _ = daily_summary(df)
 
 
 # =============================================================================
@@ -307,7 +307,11 @@ class TestStationDailySummary:
         assert result.index.names == ["station", "timestamp"]
         
         # Check Alpha station, first day
-        alpha_day1 = result.loc[("Alpha", dates[0].date())]
+        indexed_result = result.reset_index()
+        alpha_day1 = indexed_result[
+            (indexed_result["station"] == "Alpha")
+            & (indexed_result["timestamp"] == dates[0].date())
+        ].iloc[0]
         assert alpha_day1["temp_mean"] == pytest.approx(10.0)
         assert alpha_day1["temp_count"] == 1
 
@@ -473,7 +477,7 @@ class TestStationRankings:
         })
         
         with pytest.raises(ValueError, match="Invalid metric"):
-            station_rankings(df, metric="invalid_metric")
+            _ = station_rankings(df, metric="invalid_metric")
 
     def test_empty_dataframe(self):
         """Test rankings with empty DataFrame."""
@@ -494,7 +498,7 @@ class TestStationRankings:
 class TestExportSummaryReport:
     """Test suite for export_summary_report function."""
 
-    def test_export_csv(self, tmp_path):
+    def test_export_csv(self, tmp_path: Path) -> None:
         """Test exporting summary report to CSV."""
         df = pd.DataFrame({
             "station": ["Alpha", "Bravo"],
@@ -514,7 +518,7 @@ class TestExportSummaryReport:
         assert "station" in content
         assert "Alpha" in content
 
-    def test_export_json(self, tmp_path):
+    def test_export_json(self, tmp_path: Path) -> None:
         """Test exporting summary report to JSON."""
         df = pd.DataFrame({
             "station": ["Alpha", "Bravo"],
@@ -537,9 +541,9 @@ class TestExportSummaryReport:
         })
         
         with pytest.raises(ValueError, match="Invalid format"):
-            export_summary_report(df, "output.xyz", format="invalid")
+            _ = export_summary_report(df, "output.xyz", format="invalid")
 
-    def test_creates_parent_directories(self, tmp_path):
+    def test_creates_parent_directories(self, tmp_path: Path) -> None:
         """Test that parent directories are created if they don't exist."""
         df = pd.DataFrame({
             "station": ["Alpha"],

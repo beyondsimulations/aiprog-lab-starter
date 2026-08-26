@@ -4,10 +4,46 @@ This module provides functions to compute summary statistics for weather station
 See docs/stats_module_spec.md for the full specification.
 """
 
-import pandas as pd
 from pathlib import Path
-from typing import Union
-from datetime import datetime
+from typing import TypedDict, cast
+
+import pandas as pd
+
+
+class DateRange(TypedDict):
+    """First and last timestamps represented in a dataset."""
+
+    start: pd.Timestamp | None
+    end: pd.Timestamp | None
+
+
+class OutlierCounts(TypedDict):
+    """Counts below and above an accepted measurement range."""
+
+    low: int
+    high: int
+
+
+type OutlierReport = dict[str, OutlierCounts]
+
+
+class StationActivity(TypedDict):
+    """Reading counts and the most and least active stations."""
+
+    reading_counts: dict[str, int]
+    most_active: str | None
+    least_active: str | None
+
+
+class DataQualityReport(TypedDict):
+    """Structured data quality metrics returned by data_quality_report."""
+
+    total_readings: int
+    total_stations: int
+    date_range: DateRange
+    completeness: dict[str, float]
+    outliers: OutlierReport
+    stations: StationActivity
 
 
 def station_summary(df: pd.DataFrame) -> pd.DataFrame:
@@ -43,26 +79,30 @@ def station_summary(df: pd.DataFrame) -> pd.DataFrame:
     
     # Group by station and compute statistics
     grouped = df.groupby("station")
-    
-    # Compute temperature statistics
-    temp_stats = grouped["temperature"].agg([
-        ("temp_mean", "mean"),
-        ("temp_max", "max"),
-        ("temp_min", "min"),
-        ("temp_std", "std"),
-        ("temp_count", "count")
-    ])
-    
-    # Compute humidity statistics
-    hum_stats = grouped["humidity_pct"].agg([
-        ("hum_mean", "mean"),
-        ("hum_max", "max"),
-        ("hum_min", "min"),
-        ("hum_std", "std"),
-        ("hum_count", "count")
-    ])
-    
-    # Combine the statistics
+
+    temp_stats = grouped["temperature"].agg(
+        ["mean", "max", "min", "std", "count"]
+    ).rename(
+        columns={
+            "mean": "temp_mean",
+            "max": "temp_max",
+            "min": "temp_min",
+            "std": "temp_std",
+            "count": "temp_count",
+        }
+    )
+    hum_stats = grouped["humidity_pct"].agg(
+        ["mean", "max", "min", "std", "count"]
+    ).rename(
+        columns={
+            "mean": "hum_mean",
+            "max": "hum_max",
+            "min": "hum_min",
+            "std": "hum_std",
+            "count": "hum_count",
+        }
+    )
+
     result = pd.concat([temp_stats, hum_stats], axis=1)
     
     return result
@@ -102,32 +142,27 @@ def daily_summary(df: pd.DataFrame) -> pd.DataFrame:
     # Ensure we have a copy to avoid modifying the original
     df = df.copy()
     
-    # Convert timestamp to datetime if it's not already
-    df["timestamp"] = pd.to_datetime(df["timestamp"])
-    
-    # Convert columns to numeric, coercing errors to NaN
+    timestamps: pd.Series[pd.Timestamp] = pd.to_datetime(df["timestamp"])
+    df["timestamp"] = timestamps
     df["temperature"] = pd.to_numeric(df["temperature"], errors="coerce")
     df["humidity_pct"] = pd.to_numeric(df["humidity_pct"], errors="coerce")
-    
-    # Extract date from timestamp for grouping
-    df["date"] = df["timestamp"].dt.date
-    
-    # Group by date and compute statistics
+    df["date"] = timestamps.dt.date
+
     grouped = df.groupby("date")
-    
-    # Compute temperature statistics
-    temp_stats = grouped["temperature"].agg([
-        ("temp_mean", "mean"),
-        ("temp_max", "max"),
-        ("temp_min", "min")
-    ])
-    
-    # Compute humidity statistics
-    hum_stats = grouped["humidity_pct"].agg([
-        ("hum_mean", "mean"),
-        ("hum_max", "max"),
-        ("hum_min", "min")
-    ])
+    temp_stats = grouped["temperature"].agg(["mean", "max", "min"]).rename(
+        columns={
+            "mean": "temp_mean",
+            "max": "temp_max",
+            "min": "temp_min",
+        }
+    )
+    hum_stats = grouped["humidity_pct"].agg(["mean", "max", "min"]).rename(
+        columns={
+            "mean": "hum_mean",
+            "max": "hum_max",
+            "min": "hum_min",
+        }
+    )
     
     # Compute station and reading counts
     station_count = grouped["station"].nunique().to_frame(name="station_count")
@@ -167,38 +202,36 @@ def station_daily_summary(df: pd.DataFrame) -> pd.DataFrame:
     # Ensure we have a copy to avoid modifying the original
     df = df.copy()
     
-    # Convert timestamp to datetime if it's not already
-    df["timestamp"] = pd.to_datetime(df["timestamp"])
-    
-    # Convert columns to numeric, coercing errors to NaN
+    timestamps: pd.Series[pd.Timestamp] = pd.to_datetime(df["timestamp"])
+    df["timestamp"] = timestamps
     df["temperature"] = pd.to_numeric(df["temperature"], errors="coerce")
     df["humidity_pct"] = pd.to_numeric(df["humidity_pct"], errors="coerce")
-    
-    # Extract date from timestamp for grouping
-    df["date"] = df["timestamp"].dt.date
-    
-    # Group by station and date
+    df["date"] = timestamps.dt.date
+
     grouped = df.groupby(["station", "date"])
-    
-    # Compute temperature statistics
-    temp_stats = grouped["temperature"].agg([
-        ("temp_mean", "mean"),
-        ("temp_max", "max"),
-        ("temp_min", "min"),
-        ("temp_std", "std"),
-        ("temp_count", "count")
-    ])
-    
-    # Compute humidity statistics
-    hum_stats = grouped["humidity_pct"].agg([
-        ("hum_mean", "mean"),
-        ("hum_max", "max"),
-        ("hum_min", "min"),
-        ("hum_std", "std"),
-        ("hum_count", "count")
-    ])
-    
-    # Combine the statistics
+    temp_stats = grouped["temperature"].agg(
+        ["mean", "max", "min", "std", "count"]
+    ).rename(
+        columns={
+            "mean": "temp_mean",
+            "max": "temp_max",
+            "min": "temp_min",
+            "std": "temp_std",
+            "count": "temp_count",
+        }
+    )
+    hum_stats = grouped["humidity_pct"].agg(
+        ["mean", "max", "min", "std", "count"]
+    ).rename(
+        columns={
+            "mean": "hum_mean",
+            "max": "hum_max",
+            "min": "hum_min",
+            "std": "hum_std",
+            "count": "hum_count",
+        }
+    )
+
     result = pd.concat([temp_stats, hum_stats], axis=1)
     
     # Set the multi-index
@@ -207,88 +240,98 @@ def station_daily_summary(df: pd.DataFrame) -> pd.DataFrame:
     return result
 
 
-def data_quality_report(df: pd.DataFrame) -> dict:
+def data_quality_report(df: pd.DataFrame) -> DataQualityReport:
     """Generate a data quality report for the dataset.
-    
+
     Args:
-        df: DataFrame with weather station data
-    
+        df: DataFrame with weather station data.
+
     Returns:
-        Dictionary containing:
-        - total_readings: int
-        - total_stations: int
-        - date_range: {"start": datetime, "end": datetime}
-        - completeness: dict with percentage of non-null values for each column
-        - outliers: dict with low/high outlier counts for temperature and humidity
-        - stations: dict with most_active, least_active, and reading_counts
+        Counts, date range, completeness, outliers, and station activity.
     """
-    # Ensure we have a copy to avoid modifying the original
-    df = df.copy()
-    
-    # Convert timestamp to datetime if it exists and is not already
-    if "timestamp" in df.columns:
-        df["timestamp"] = pd.to_datetime(df["timestamp"])
-    
-    # Convert numeric columns to numeric, coercing errors to NaN
-    numeric_cols = ["temperature", "humidity_pct", "wind_ms", "pressure_hpa"]
-    for col in numeric_cols:
-        if col in df.columns:
-            df[col] = pd.to_numeric(df[col], errors="coerce")
-    
-    # Basic counts
-    total_readings = len(df)
-    total_stations = df["station"].nunique() if "station" in df.columns else 0
-    
-    # Date range
-    date_range = {}
-    if "timestamp" in df.columns and total_readings > 0:
-        date_range["start"] = df["timestamp"].min()
-        date_range["end"] = df["timestamp"].max()
-    else:
-        date_range["start"] = None
-        date_range["end"] = None
-    
-    # Completeness
-    completeness = {}
-    for col in numeric_cols:
-        if col in df.columns:
-            non_null_count = df[col].notna().sum()
-            completeness[col] = (non_null_count / total_readings * 100) if total_readings > 0 else 0.0
-    
-    # Outliers
-    outliers = {}
-    if "temperature" in df.columns:
-        temp_valid = df["temperature"].dropna()
+    working = df.copy()
+
+    timestamps: pd.Series[pd.Timestamp] | None = None
+    if "timestamp" in working.columns:
+        timestamps = pd.to_datetime(working["timestamp"])
+        working["timestamp"] = timestamps
+
+    numeric_columns = [
+        "temperature",
+        "humidity_pct",
+        "wind_ms",
+        "pressure_hpa",
+    ]
+    for column in numeric_columns:
+        if column in working.columns:
+            working[column] = pd.to_numeric(working[column], errors="coerce")
+
+    total_readings = len(working)
+    total_stations = (
+        working["station"].nunique() if "station" in working.columns else 0
+    )
+
+    date_range: DateRange = {"start": None, "end": None}
+    if timestamps is not None and total_readings > 0:
+        date_range = {"start": timestamps.min(), "end": timestamps.max()}
+
+    completeness: dict[str, float] = {}
+    for column in numeric_columns:
+        if column in working.columns:
+            non_null_mask: pd.Series[bool] = working[column].notna()
+            non_null_count = sum(non_null_mask)
+            completeness[column] = (
+                non_null_count / total_readings * 100
+                if total_readings > 0
+                else 0.0
+            )
+
+    outliers: OutlierReport = {}
+    if "temperature" in working.columns:
+        temperature = cast(
+            "pd.Series[float]", working["temperature"].dropna()
+        )
+        temperature_low: pd.Series[bool] = temperature < -50
+        temperature_high: pd.Series[bool] = temperature > 60
         outliers["temperature"] = {
-            "low": (temp_valid < -50).sum(),
-            "high": (temp_valid > 60).sum()
+            "low": sum(temperature_low),
+            "high": sum(temperature_high),
         }
-    if "humidity_pct" in df.columns:
-        hum_valid = df["humidity_pct"].dropna()
+    if "humidity_pct" in working.columns:
+        humidity = cast("pd.Series[float]", working["humidity_pct"].dropna())
+        humidity_low: pd.Series[bool] = humidity < 0
+        humidity_high: pd.Series[bool] = humidity > 100
         outliers["humidity_pct"] = {
-            "low": (hum_valid < 0).sum(),
-            "high": (hum_valid > 100).sum()
+            "low": sum(humidity_low),
+            "high": sum(humidity_high),
         }
-    
-    # Station activity
-    stations = {}
-    if "station" in df.columns and total_readings > 0:
-        reading_counts = df["station"].value_counts().to_dict()
-        stations["reading_counts"] = reading_counts
-        stations["most_active"] = max(reading_counts, key=reading_counts.get)
-        stations["least_active"] = min(reading_counts, key=reading_counts.get)
-    else:
-        stations["reading_counts"] = {}
-        stations["most_active"] = None
-        stations["least_active"] = None
-    
+
+    stations: StationActivity = {
+        "reading_counts": {},
+        "most_active": None,
+        "least_active": None,
+    }
+    if "station" in working.columns and total_readings > 0:
+        reading_counts = cast(
+            "dict[str, int]", working["station"].value_counts().to_dict()
+        )
+        stations = {
+            "reading_counts": reading_counts,
+            "most_active": max(
+                reading_counts, key=lambda station: reading_counts[station]
+            ),
+            "least_active": min(
+                reading_counts, key=lambda station: reading_counts[station]
+            ),
+        }
+
     return {
         "total_readings": total_readings,
         "total_stations": total_stations,
         "date_range": date_range,
         "completeness": completeness,
         "outliers": outliers,
-        "stations": stations
+        "stations": stations,
     }
 
 
@@ -325,7 +368,11 @@ def station_rankings(df: pd.DataFrame, metric: str = "temp_mean", ascending: boo
     return sorted_summary
 
 
-def export_summary_report(df: pd.DataFrame, output_path: Union[str, Path], format: str = "csv") -> Path:
+def export_summary_report(
+    df: pd.DataFrame,
+    output_path: str | Path,
+    format: str = "csv",
+) -> Path:
     """Export a comprehensive summary report to file.
     
     Args:
@@ -351,11 +398,13 @@ def export_summary_report(df: pd.DataFrame, output_path: Union[str, Path], forma
     output_path.parent.mkdir(parents=True, exist_ok=True)
     
     # Generate comprehensive report data
-    report_data = {
+    report_data: dict[str, object] = {
         "station_summary": station_summary(df).to_dict(),
-        "daily_summary": daily_summary(df).to_dict() if "timestamp" in df.columns else None,
+        "daily_summary": (
+            daily_summary(df).to_dict() if "timestamp" in df.columns else None
+        ),
         "data_quality": data_quality_report(df),
-        "station_rankings": station_rankings(df).to_dict()
+        "station_rankings": station_rankings(df).to_dict(),
     }
     
     # Export based on format
@@ -365,10 +414,14 @@ def export_summary_report(df: pd.DataFrame, output_path: Union[str, Path], forma
         station_sum.to_csv(output_path, index=True)
     elif format == "json":
         import json
-        with open(output_path, 'w') as f:
-            json.dump(report_data, f, indent=2, default=str)
+
+        with output_path.open("w", encoding="utf-8") as output_file:
+            json.dump(report_data, output_file, indent=2, default=str)
     elif format == "excel":
         station_sum = station_summary(df)
-        station_sum.to_excel(output_path, index=True)
+        # pandas-stubs cannot resolve the optional Excel engine workbook type.
+        station_sum.to_excel(  # pyright: ignore[reportUnknownMemberType]
+            output_path, index=True
+        )
     
     return output_path
