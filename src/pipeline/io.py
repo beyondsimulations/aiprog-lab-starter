@@ -6,7 +6,7 @@ and missing/invalid values.
 """
 
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, cast
 
 if TYPE_CHECKING:
     import pandas as pd
@@ -35,7 +35,7 @@ def load_raw(path: str | Path) -> "pd.DataFrame":
     return df
 
 
-def clean(df: "pd.DataFrame") -> tuple["pd.DataFrame", dict[str, Any], str]:
+def clean(df: "pd.DataFrame") -> tuple["pd.DataFrame", dict[str, int | str], str]:
     """Clean the raw measurements DataFrame.
 
     Performs the following cleaning operations:
@@ -59,7 +59,7 @@ def clean(df: "pd.DataFrame") -> tuple["pd.DataFrame", dict[str, Any], str]:
     cleaned = df.copy()
 
     # Track cleaning statistics
-    stats: dict[str, Any] = {
+    stats: dict[str, int | str] = {
         "original_rows": len(cleaned),
         "duplicate_rows_dropped": 0,
         "temperature_f_converted": 0,
@@ -98,7 +98,9 @@ def clean(df: "pd.DataFrame") -> tuple["pd.DataFrame", dict[str, Any], str]:
     cleaned["temperature"] = pd.to_numeric(cleaned["temperature"], errors="coerce")
 
     # Convert F to C using: C = (F - 32) * 5/9
-    f_temps = cleaned.loc[f_mask, "temperature"].copy()
+    f_temps = cast(
+        "pd.Series[float]", cleaned.loc[f_mask, "temperature"].copy()
+    )
     cleaned.loc[f_mask, "temperature"] = ((f_temps - 32) * 5 / 9).round(2)
 
     # Drop temp_unit column
@@ -144,7 +146,8 @@ def clean(df: "pd.DataFrame") -> tuple["pd.DataFrame", dict[str, Any], str]:
     )
 
     # 6. Drop exact duplicate rows
-    stats["duplicate_rows_dropped"] = int(cleaned.duplicated().sum())
+    duplicate_mask: pd.Series[bool] = cleaned.duplicated()
+    stats["duplicate_rows_dropped"] = sum(duplicate_mask)
     cleaned = cleaned.drop_duplicates()
 
     # 7. Ensure correct dtypes

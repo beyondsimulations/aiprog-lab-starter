@@ -16,5 +16,6 @@ packages = ["src/pipeline"]
 
 [dependency-groups]
 dev = [
+    "pandas-stubs>=3.0.5.260730",
     "pytest>=9.1.1",
 ]
