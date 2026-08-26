@@ -35,7 +35,8 @@ Teaching material for the **AI-Assisted Programming workshop** at HSU.
 - Justify new dependencies for educational value
 
 ### Testing
-- No formal test suite
+- **Follow Test-Driven Development (TDD) principles**: Write tests first, then implement functionality
+- No formal test suite initially - build it incrementally
 - Validate by running script and checking output/plots
 - Use print statements or assertions for new functionality
 - **Always use `uv run python <script>` to execute Python scripts**
